@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PlantService, Plant } from '../../services/plant.service';
 
@@ -30,7 +31,7 @@ export class PlantListComponent implements OnInit {
   lightOptions = ['full_sun', 'part_shade', 'full_shade'];
   families: string[] = [];
 
-  constructor(private plantService: PlantService) { }
+  constructor(private plantService: PlantService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadPlants();
@@ -232,9 +233,10 @@ export class PlantListComponent implements OnInit {
   }
 
   openPlantModal(plant: Plant): void {
-    this.selectedPlant = plant;
-    this.isPlantModalOpen = true;
+  if (plant._id) {
+    this.router.navigate(['/plant', plant._id]);
   }
+}
 
   closePlantModal(): void {
     this.isPlantModalOpen = false;
